@@ -29,6 +29,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    buildFeatures{
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -39,4 +42,16 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    // meownav
+    implementation ("com.etebarian:meow-bottom-navigation-java:1.2.0")
+    //Room
+    val room_version = "2.5.2"
+    implementation ("androidx.room:room-runtime:$room_version")
+//    kapt ("androidx.room:room-compiler:$room_version")
+// kotlin extensions and coroutines support for room
+    implementation ("androidx.room:room-ktx:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    // https://mvnrepository.com/artifact/com.github.AnyChart/AnyChart-Android
+    implementation("com.github.AnyChart:AnyChart-Android:3.0.0")
 }

@@ -4,4 +4,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="name">Name</string>
     <string name="chia_tien">Chia tiền</string>
+    <string name="lich">Lịch</string>
+    <string name="bao_cao">Báo cáo</string>
+    <string name="chi_tieu">Chi tiêu</string>
+    <string name="thu_nhap">Thu nhập</string>
 </resources>

@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/bao_cao"
+            android:text="Báo cáo"
             android:textColor="@color/black"
             android:textSize="16sp" />
     </LinearLayout>
@@ -29,7 +29,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/btn_back_nonth"
+            android:id="@+id/btn_back_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#F8F8F8"
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/chi_tieu" />
+                android:text="Chi tiêu" />
 
             <TextView
                 android:id="@+id/tv_spending"
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/thu_nhap" />
+                android:text="Thu nhập" />
 
             <TextView
                 android:id="@+id/tv_revenue"

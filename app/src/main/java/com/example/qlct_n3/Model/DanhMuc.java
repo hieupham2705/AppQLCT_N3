@@ -8,17 +8,21 @@ import androidx.room.PrimaryKey;
 public class DanhMuc {
     @PrimaryKey(autoGenerate = true)
     private int Id;
-    
     @ColumnInfo(name = "Icon")
-    private String Icon;
-    
+    private String icon;
     @ColumnInfo(name = "TenDanhMuc")
-    private String TenDanhMuc;
+    private String tenDanhMuc;
+    @ColumnInfo(name = "ThuChi")
+    private Boolean thuChi;
 
-    public DanhMuc(int Id, String Icon, String TenDanhMuc) {
+    public DanhMuc() {
+    }
+
+    public DanhMuc(int Id, String icon, String tenDanhMuc, Boolean thuChi) {
         this.Id = Id;
-        this.Icon = Icon;
-        this.TenDanhMuc = TenDanhMuc;
+        this.icon = icon;
+        this.tenDanhMuc = tenDanhMuc;
+        this.thuChi = thuChi;
     }
 
     public int getId() {
@@ -30,19 +34,28 @@ public class DanhMuc {
     }
 
     public String getIcon() {
-        return Icon;
+        return icon;
     }
 
-    public void setIcon(String Icon) {
-        this.Icon = Icon;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getTenDanhMuc() {
-        return TenDanhMuc;
+        return tenDanhMuc;
     }
 
-    public void setTenDanhMuc(String TenDanhMuc) {
-        this.TenDanhMuc = TenDanhMuc;
+    public void setTenDanhMuc(String tenDanhMuc) {
+        this.tenDanhMuc = tenDanhMuc;
+    }
+
+    public Boolean getThuChi() {
+        return thuChi;
+    }
+
+    public void setThuChi(Boolean thuChi) {
+        this.thuChi = thuChi;
     }
 }
+
 

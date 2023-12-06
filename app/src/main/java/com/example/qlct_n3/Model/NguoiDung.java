@@ -5,16 +5,18 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import com.example.qlct_n3.Model.DanhMuc;
+
 @Entity(tableName = "NguoiDung", foreignKeys = @ForeignKey(
         entity = HoaDon.class,
-        parentColumns = "IdHoaDon",
-        childColumns = "Id",
-        onDelete = ForeignKey.CASCADE
+        parentColumns = "Id",
+        childColumns = "IdHoaDon",
+        onDelete = ForeignKey.NO_ACTION
 ))
 public class NguoiDung {
 
     @PrimaryKey(autoGenerate = true)
-    private int Id;
+    private int id;
     @ColumnInfo(name = "Ten")
     private String Ten;
     @ColumnInfo(name = "Sdt")
@@ -25,10 +27,10 @@ public class NguoiDung {
     private String TrangThai;
     // khoa ngoai
     @ColumnInfo(name = "IdHoaDon")
-    private int IdHoaDon;
+    private Integer IdHoaDon;
 
-    public NguoiDung(int Id, String Ten, String Sdt, String KhoanChi, String TrangThai, int IdHoaDon) {
-        this.Id = Id;
+    public NguoiDung(int id, String Ten, String Sdt, String KhoanChi, String TrangThai, Integer IdHoaDon) {
+        this.id = id;
         this.Ten = Ten;
         this.Sdt = Sdt;
         this.KhoanChi = KhoanChi;
@@ -37,11 +39,11 @@ public class NguoiDung {
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
-    public void setId(int Id) {
-        this.Id = Id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTen() {
@@ -76,12 +78,13 @@ public class NguoiDung {
         this.TrangThai = TrangThai;
     }
 
-    public int getIdHoaDon() {
+    public Integer getIdHoaDon() {
         return IdHoaDon;
     }
 
-    public void setIdHoaDon(int IdHoaDon) {
+    public void setIdHoaDon(Integer IdHoaDon) {
         this.IdHoaDon = IdHoaDon;
     }
 }
+
 

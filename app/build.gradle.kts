@@ -54,4 +54,6 @@ dependencies {
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     // https://mvnrepository.com/artifact/com.github.AnyChart/AnyChart-Android
     implementation("com.github.AnyChart:AnyChart-Android:3.0.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 }

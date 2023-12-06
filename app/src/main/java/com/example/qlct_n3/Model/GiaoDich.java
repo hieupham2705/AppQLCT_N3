@@ -5,39 +5,45 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import com.example.qlct_n3.Model.DanhMuc;
+
 @Entity(tableName = "GiaoDich", foreignKeys = @ForeignKey(
         entity = DanhMuc.class,
-        parentColumns = "IdDanhMuc",
-        childColumns = "Id",
-        onDelete = ForeignKey.CASCADE
+        parentColumns = "Id",
+        childColumns = "IdDanhMuc",
+        onDelete = ForeignKey.NO_ACTION
 ))
 public class GiaoDich {
     @PrimaryKey(autoGenerate = true)
     private int Id;
-    private Integer NgayGiaoDich;
+    @ColumnInfo(name = "NgayGiaoDich")
+    private int ngayGiaoDich;
     @ColumnInfo(name = "ThangGiaoDich")
-    private Integer ThangGiaoDich;
+    private int thangGiaoDich;
     @ColumnInfo(name = "NamGiaoDich")
-    private Integer NamGiaoDich;
+    private int namGiaoDich;
     @ColumnInfo(name = "Tien")
-    private Long Tien;
+    private Long tien;
     @ColumnInfo(name = "GhiChu")
-    private String GhiChu;
+    private String ghiChu;
     @ColumnInfo(name = "ThuChi")
-    private Boolean ThuChi;
+    private Boolean thuChi;
     // khoa ngoai
     @ColumnInfo(name = "IdDanhMuc")
-    private Long IdDanhMuc;
+    private int idDanhMuc;
 
-    public GiaoDich(int Id, Integer NgayGiaoDich, Integer ThangGiaoDich, Integer NamGiaoDich, Long Tien, String GhiChu, Boolean ThuChi, Long IdDanhMuc) {
+    public GiaoDich() {
+    }
+
+    public GiaoDich(int Id, int ngayGiaoDich, int thangGiaoDich, int namGiaoDich, Long tien, String ghiChu, Boolean thuChi, int idDanhMuc) {
         this.Id = Id;
-        this.NgayGiaoDich = NgayGiaoDich;
-        this.ThangGiaoDich = ThangGiaoDich;
-        this.NamGiaoDich = NamGiaoDich;
-        this.Tien = Tien;
-        this.GhiChu = GhiChu;
-        this.ThuChi = ThuChi;
-        this.IdDanhMuc = IdDanhMuc;
+        this.ngayGiaoDich = ngayGiaoDich;
+        this.thangGiaoDich = thangGiaoDich;
+        this.namGiaoDich = namGiaoDich;
+        this.tien = tien;
+        this.ghiChu = ghiChu;
+        this.thuChi = thuChi;
+        this.idDanhMuc = idDanhMuc;
     }
 
     public int getId() {
@@ -48,60 +54,61 @@ public class GiaoDich {
         this.Id = Id;
     }
 
-    public Integer getNgayGiaoDich() {
-        return NgayGiaoDich;
+    public int getNgayGiaoDich() {
+        return ngayGiaoDich;
     }
 
-    public void setNgayGiaoDich(Integer NgayGiaoDich) {
-        this.NgayGiaoDich = NgayGiaoDich;
+    public void setNgayGiaoDich(int ngayGiaoDich) {
+        this.ngayGiaoDich = ngayGiaoDich;
     }
 
-    public Integer getThangGiaoDich() {
-        return ThangGiaoDich;
+    public int getThangGiaoDich() {
+        return thangGiaoDich;
     }
 
-    public void setThangGiaoDich(Integer ThangGiaoDich) {
-        this.ThangGiaoDich = ThangGiaoDich;
+    public void setThangGiaoDich(int thangGiaoDich) {
+        this.thangGiaoDich = thangGiaoDich;
     }
 
-    public Integer getNamGiaoDich() {
-        return NamGiaoDich;
+    public int getNamGiaoDich() {
+        return namGiaoDich;
     }
 
-    public void setNamGiaoDich(Integer NamGiaoDich) {
-        this.NamGiaoDich = NamGiaoDich;
+    public void setNamGiaoDich(int namGiaoDich) {
+        this.namGiaoDich = namGiaoDich;
     }
 
     public Long getTien() {
-        return Tien;
+        return tien;
     }
 
-    public void setTien(Long Tien) {
-        this.Tien = Tien;
+    public void setTien(Long tien) {
+        this.tien = tien;
     }
 
     public String getGhiChu() {
-        return GhiChu;
+        return ghiChu;
     }
 
-    public void setGhiChu(String GhiChu) {
-        this.GhiChu = GhiChu;
+    public void setGhiChu(String ghiChu) {
+        this.ghiChu = ghiChu;
     }
 
     public Boolean getThuChi() {
-        return ThuChi;
+        return thuChi;
     }
 
-    public void setThuChi(Boolean ThuChi) {
-        this.ThuChi = ThuChi;
+    public void setThuChi(Boolean thuChi) {
+        this.thuChi = thuChi;
     }
 
-    public Long getIdDanhMuc() {
-        return IdDanhMuc;
+    public int getIdDanhMuc() {
+        return idDanhMuc;
     }
 
-    public void setIdDanhMuc(Long IdDanhMuc) {
-        this.IdDanhMuc = IdDanhMuc;
+    public void setIdDanhMuc(int idDanhMuc) {
+        this.idDanhMuc = idDanhMuc;
     }
 }
+
 

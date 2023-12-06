@@ -8,16 +8,23 @@ import androidx.room.PrimaryKey;
 public class HoaDon {
     @PrimaryKey(autoGenerate = true)
     private int Id;
+
     @ColumnInfo(name = "TongTien")
-    private long TongTien;
+    private Long TongTien;
+
     @ColumnInfo(name = "Mota")
     private String Mota;
-    @ColumnInfo(name = "SoLuong")
-    private int SoLuong;
-    @ColumnInfo(name = "Ngay")
-    private int Ngay;
 
-    public HoaDon(int Id, long TongTien, String Mota, int SoLuong, int Ngay) {
+    @ColumnInfo(name = "SoLuong")
+    private Integer SoLuong;
+
+    @ColumnInfo(name = "Ngay")
+    private Integer Ngay;
+
+    public HoaDon() {
+    }
+
+    public HoaDon(int Id, Long TongTien, String Mota, Integer SoLuong, Integer Ngay) {
         this.Id = Id;
         this.TongTien = TongTien;
         this.Mota = Mota;
@@ -33,11 +40,11 @@ public class HoaDon {
         this.Id = Id;
     }
 
-    public long getTongTien() {
+    public Long getTongTien() {
         return TongTien;
     }
 
-    public void setTongTien(long TongTien) {
+    public void setTongTien(Long TongTien) {
         this.TongTien = TongTien;
     }
 
@@ -49,20 +56,21 @@ public class HoaDon {
         this.Mota = Mota;
     }
 
-    public int getSoLuong() {
+    public Integer getSoLuong() {
         return SoLuong;
     }
 
-    public void setSoLuong(int SoLuong) {
+    public void setSoLuong(Integer SoLuong) {
         this.SoLuong = SoLuong;
     }
 
-    public int getNgay() {
+    public Integer getNgay() {
         return Ngay;
     }
 
-    public void setNgay(int Ngay) {
+    public void setNgay(Integer Ngay) {
         this.Ngay = Ngay;
     }
 }
+
 

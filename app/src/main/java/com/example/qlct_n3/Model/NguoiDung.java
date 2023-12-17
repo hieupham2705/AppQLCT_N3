@@ -22,20 +22,24 @@ public class NguoiDung {
     @ColumnInfo(name = "Sdt")
     private String Sdt;
     @ColumnInfo(name = "KhoanChi")
-    private String KhoanChi;
+    private Long KhoanChi;
     @ColumnInfo(name = "TrangThai")
-    private String TrangThai;
+    private Boolean TrangThai;
     // khoa ngoai
     @ColumnInfo(name = "IdHoaDon")
-    private Integer IdHoaDon;
+    private Long IdHoaDon;
 
-    public NguoiDung(int id, String Ten, String Sdt, String KhoanChi, String TrangThai, Integer IdHoaDon) {
+    public NguoiDung(int id, String Ten, String Sdt, Long KhoanChi, Boolean TrangThai, Long IdHoaDon) {
         this.id = id;
         this.Ten = Ten;
         this.Sdt = Sdt;
         this.KhoanChi = KhoanChi;
         this.TrangThai = TrangThai;
         this.IdHoaDon = IdHoaDon;
+    }
+
+    public NguoiDung() {
+
     }
 
     public int getId() {
@@ -62,27 +66,27 @@ public class NguoiDung {
         this.Sdt = Sdt;
     }
 
-    public String getKhoanChi() {
+    public Long getKhoanChi() {
         return KhoanChi;
     }
 
-    public void setKhoanChi(String KhoanChi) {
+    public void setKhoanChi(Long KhoanChi) {
         this.KhoanChi = KhoanChi;
     }
 
-    public String getTrangThai() {
+    public Boolean getTrangThai() {
         return TrangThai;
     }
 
-    public void setTrangThai(String TrangThai) {
+    public void setTrangThai(Boolean TrangThai) {
         this.TrangThai = TrangThai;
     }
 
-    public Integer getIdHoaDon() {
+    public Long getIdHoaDon() {
         return IdHoaDon;
     }
 
-    public void setIdHoaDon(Integer IdHoaDon) {
+    public void setIdHoaDon(Long IdHoaDon) {
         this.IdHoaDon = IdHoaDon;
     }
 }

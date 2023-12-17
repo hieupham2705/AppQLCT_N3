@@ -2,10 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:paddingHorizontal="20dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,6 +18,7 @@
         android:orientation="horizontal">
 
         <ImageButton
+            android:id="@+id/imbtn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#F8F8F8"
@@ -32,97 +36,105 @@
             android:textColor="@color/gray" />
     </LinearLayout>
 
-    <TableRow
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name" />
-        <Space
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"/>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edt_name"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_weight="1">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Mô tả" />
 
-            <com.example.qlct_n3.base.BaseTextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edt_describe"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:paddingStart="10dp"
-                android:background="#F1F1F1"
-                android:hint="Nhập tên"
-                android:inputType="number" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_weight="1">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.example.qlct_n3.base.BaseTextInputEditText
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:background="#F1F1F1"
+                    android:hint="Nhập mô tả"
+                    android:inputType="text"
+                    android:paddingStart="10dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-    </TableRow>
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        </TableRow>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name" />
-        <Space
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edt_spending_money"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_weight="1">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Tổng tiền" />
 
-            <com.example.qlct_n3.base.BaseTextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edt_total_money"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:paddingStart="10dp"
-                android:background="#F1F1F1"
-                android:hint="Nhập số tiền chi"
-                android:inputType="number" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_weight="1">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.example.qlct_n3.base.BaseTextInputEditText
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:background="#F1F1F1"
+                    android:hint="Nhập số tổng tiền"
+                    android:inputType="number"
+                    android:paddingStart="10dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-    </TableRow>
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="27dp"/>
-    <Button
-        android:id="@+id/btn_add_member"
-        android:backgroundTint="@color/pink"
-        android:text="Thêm thành viên"
-        android:textColor="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="5dp"
-        android:id="@+id/recyclerview"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        </LinearLayout>
 
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="27dp"/>
-    <Button
-        android:id="@+id/btn_share_money"
-        android:backgroundTint="@color/pink"
-        android:text="Chia tiền"
-        android:textColor="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="27dp" />
+
+        <Button
+            android:id="@+id/btn_add_member"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/pink"
+            android:text="Thêm thành viên"
+            android:textColor="@color/white" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/border_recycle_sharemoney"
+            android:padding="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="27dp" />
+
+        <Button
+            android:id="@+id/btn_share_money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/pink"
+            android:text="Chia tiền"
+            android:textColor="@color/white" />
+    </LinearLayout>
 </LinearLayout>

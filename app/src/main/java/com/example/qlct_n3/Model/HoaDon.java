@@ -1,13 +1,14 @@
 package com.example.qlct_n3.Model;
 
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
 @Entity(tableName = "HoaDon")
 public class HoaDon {
     @PrimaryKey(autoGenerate = true)
-    private int Id;
+    private Long Id;
 
     @ColumnInfo(name = "TongTien")
     private Long TongTien;
@@ -19,24 +20,23 @@ public class HoaDon {
     private Integer SoLuong;
 
     @ColumnInfo(name = "Ngay")
-    private Integer Ngay;
+    private String Ngay;
 
     public HoaDon() {
     }
 
-    public HoaDon(int Id, Long TongTien, String Mota, Integer SoLuong, Integer Ngay) {
-        this.Id = Id;
+    public HoaDon( Long TongTien, String Mota, Integer SoLuong, String Ngay) {
         this.TongTien = TongTien;
         this.Mota = Mota;
         this.SoLuong = SoLuong;
         this.Ngay = Ngay;
     }
 
-    public int getId() {
+    public Long getId() {
         return Id;
     }
 
-    public void setId(int Id) {
+    public void setId(Long Id) {
         this.Id = Id;
     }
 
@@ -64,11 +64,11 @@ public class HoaDon {
         this.SoLuong = SoLuong;
     }
 
-    public Integer getNgay() {
+    public String getNgay() {
         return Ngay;
     }
 
-    public void setNgay(Integer Ngay) {
+    public void setNgay(String Ngay) {
         this.Ngay = Ngay;
     }
 }

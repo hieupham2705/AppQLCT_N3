@@ -1,17 +1,22 @@
 package com.example.qlct_n3.Dao;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.qlct_n3.Model.DanhMuc;
 import com.example.qlct_n3.Model.GiaoDich;
+import com.example.qlct_n3.Model.HoaDon;
+import com.example.qlct_n3.Model.NguoiDung;
 import com.example.qlct_n3.Model.SpendingInChart;
 
 import java.util.List;
 @Dao
 public interface Daoo {
+    // GIAO DỊCH
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public Long themNguoiGiaoDich(GiaoDich giaoDich);
 
@@ -41,6 +46,10 @@ public interface Daoo {
 
     @Query("SELECT GiaoDich.Tien, DanhMuc.TenDanhMuc, DanhMuc.Icon FROM GiaoDich INNER JOIN DanhMuc ON GiaoDich.IdDanhMuc = DanhMuc.Id where GiaoDich.ThangGiaoDich = :thang and GiaoDich.ThuChi = 0")
     public List<SpendingInChart> timKiemGiaoDichThuBieuDo(int thang);
+
+    @Delete
+    public void xoaGiaoDich (GiaoDich giaoDich);
+    // DANH MỤC
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public Long themDanhMuc(DanhMuc danhMuc);
 
@@ -52,4 +61,21 @@ public interface Daoo {
 
     @Query("select * from DanhMuc where ThuChi = 0")
     public List<DanhMuc> timKiemDanhMucThu();
+    @Delete
+    public Integer xoaDanhMuc(DanhMuc danhMuc);
+
+    // HÓA ĐƠN
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public Long themHoaDon(HoaDon hoaDon);
+
+    @Query("SELECT * from HoaDon where id = :id")
+    public HoaDon timKiemHoaDon(Long id);
+    //NGƯỜI DÙNG
+    @Query("SELECT * from NguoiDung where IdHoaDon = :id")
+    public List<NguoiDung> timKiemNguoiDungTheoHoaDon(Long id);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public void themNguoiDungs(List<NguoiDung> nguoiDungs);
+    @Update
+    public void chinhSuaNguoiDung(NguoiDung nguoiDung);
 }

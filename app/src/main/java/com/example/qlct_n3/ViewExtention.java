@@ -17,13 +17,17 @@ public class ViewExtention {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public static void showToast(Fragment fragment, String mess) {
-        Toast.makeText(fragment.getContext(), mess, Toast.LENGTH_SHORT).show();
+    public static void showToast(Context context, String mess) {
+        Toast.makeText(context, mess, Toast.LENGTH_SHORT).show();
     }
-
     public static Bitmap decodeBase64ToBitmap(String base64String) {
-        byte[] imageBytes = Base64.decode(base64String, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+        try {
+            byte[] decodedBytes = Base64.decode(base64String, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static String convertDrawableToBase64(Context context, int drawableResId) {

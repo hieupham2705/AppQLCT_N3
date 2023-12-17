@@ -45,6 +45,16 @@ public class GiaoDich {
         this.thuChi = thuChi;
         this.idDanhMuc = idDanhMuc;
     }
+    public GiaoDich( int ngayGiaoDich, int thangGiaoDich, int namGiaoDich, Long tien, String ghiChu, Boolean thuChi) {
+        this.Id = Id;
+        this.ngayGiaoDich = ngayGiaoDich;
+        this.thangGiaoDich = thangGiaoDich;
+        this.namGiaoDich = namGiaoDich;
+        this.tien = tien;
+        this.ghiChu = ghiChu;
+        this.thuChi = thuChi;
+        this.idDanhMuc = idDanhMuc;
+    }
 
     public int getId() {
         return Id;

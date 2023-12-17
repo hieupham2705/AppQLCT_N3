@@ -4,6 +4,7 @@ import static com.example.qlct_n3.ViewExtention.convertDrawableToBase64;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -20,11 +21,11 @@ import java.util.concurrent.CompletableFuture;
 
 import kotlinx.coroutines.GlobalScope;
 
-@Database(entities = {DanhMuc.class, GiaoDich.class, HoaDon.class, NguoiDung.class}, version = 2, exportSchema = false)
+@Database(entities = {DanhMuc.class, GiaoDich.class, HoaDon.class, NguoiDung.class}, version = 1, exportSchema = false)
 public abstract class DataBaseManager extends RoomDatabase {
     public abstract Daoo getItemDAO();
 
-    private static final String DATABASE_NAME = "data";
+    private static final String DATABASE_NAME = "room_database.db";
     private static volatile DataBaseManager instance;
 
     public static DataBaseManager getInstance(Context context) {
@@ -42,14 +43,12 @@ public abstract class DataBaseManager extends RoomDatabase {
         return Room.databaseBuilder(context, DataBaseManager.class, DATABASE_NAME)
                 .fallbackToDestructiveMigration()
                 .addCallback(new RoomDatabase.Callback() {
+
                     @Override
-                    public void onOpen(SupportSQLiteDatabase db) {
-                        super.onOpen(db);
-//                        GlobalScope.launch(() -> prepopulateDatabase(instance.getItemDAO(), context));
+                    public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                        super.onCreate(db);
                         CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
                             prepopulateDatabase(instance.getItemDAO(), context);
-                        });
-                        future.thenRun(() -> {
                         });
                     }
                 })
@@ -74,24 +73,9 @@ public abstract class DataBaseManager extends RoomDatabase {
         dao.themDanhMuc(new DanhMuc(23, convertDrawableToBase64(context, R.drawable.icon_bonus), "Tiền thưởng", false));
         dao.themDanhMuc(new DanhMuc(24, convertDrawableToBase64(context, R.drawable.icon_investment_money), "Đầu tư", false));
         dao.themDanhMuc(new DanhMuc(25, convertDrawableToBase64(context, R.drawable.icon_supplementary_income), "Thu nhập phụ", false));
-
-
-        // create some data
-        dao.themNguoiGiaoDich(new GiaoDich(0,12,12,2023, 20000L,"giao dich",true,1));
-        dao.themNguoiGiaoDich(new GiaoDich(0,12,12,2023, 20000L,"giao dich",true,1));
-        dao.themNguoiGiaoDich(new GiaoDich(0,12,12,2023, 20000L,"giao dich",true,1));
-        dao.themNguoiGiaoDich(new GiaoDich(0,12,12,2023, 20000L,"giao dich",true,1));
-        dao.themNguoiGiaoDich(new GiaoDich(0,12,12,2023, 20000L,"giao dich",true,1));
-        dao.themNguoiGiaoDich(new GiaoDich(0,12,12,2023, 20000L,"giao dich",true,1));
-        dao.themNguoiGiaoDich(new GiaoDich(0,12,12,2023, 20000L,"giao dich",true,1));
-        dao.themNguoiGiaoDich(new GiaoDich(0,12,12,2023, 20000L,"giao dich",true,1));
-        dao.themNguoiGiaoDich(new GiaoDich(0,12,12,2023, 20000L,"giao dich",true,1));
-        dao.themNguoiGiaoDich(new GiaoDich(0,12,12,2023, 20000L,"giao dich",true,1));
-        dao.themNguoiGiaoDich(new GiaoDich(0,12,12,2023, 20000L,"giao dich",true,1));
-        dao.themNguoiGiaoDich(new GiaoDich(0,12,12,2023, 20000L,"giao dich",true,1));
-        dao.themNguoiGiaoDich(new GiaoDich(0,12,12,2023, 20000L,"giao dich",true,1));
-        dao.themNguoiGiaoDich(new GiaoDich(0,12,12,2023, 20000L,"giao dich",true,1));
-        dao.themNguoiGiaoDich(new GiaoDich(0,12,12,2023, 20000L,"giao dich",true,1));
+    }
+    public static void deleteAllTable(){
+        instance.clearAllTables();
     }
 }
 

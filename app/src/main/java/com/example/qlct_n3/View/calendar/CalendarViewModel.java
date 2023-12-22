@@ -8,22 +8,12 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.qlct_n3.Model.DanhMuc;
 import com.example.qlct_n3.Model.GiaoDich;
+import com.example.qlct_n3.Model.SpendingInCalendar;
 import com.example.qlct_n3.base.DataBaseManager;
 
 import java.util.List;
 
 public class CalendarViewModel extends ViewModel {
-    private MutableLiveData<Long> _idGiaoDich = new MutableLiveData<>();
-
-    public LiveData<Long> idGiaoDich() {
-        return _idGiaoDich;
-    }
-    private MutableLiveData<List<GiaoDich>> _giaoDichNTN = new MutableLiveData<>();
-
-    public LiveData<List<GiaoDich>> giaoDichNTN() {
-        return _giaoDichNTN;
-    }
-
     private MutableLiveData<List<Long>> _giaoDichChiThang = new MutableLiveData<>();
 
     public LiveData<List<Long>> giaoDichChiThang() {
@@ -36,15 +26,10 @@ public class CalendarViewModel extends ViewModel {
         return _giaoDichThuThang;
     }
 
-    private MutableLiveData<DanhMuc> _danhmuc = new MutableLiveData<>();
+    private MutableLiveData<List<SpendingInCalendar>> _danhmuc = new MutableLiveData<>();
 
-    public LiveData<DanhMuc> danhMuc() {
+    public LiveData<List<SpendingInCalendar>> danhMuc() {
         return _danhmuc;
-    }
-
-    public void getGiaoDichNTN(Context context, int day, int month, int year) {
-        _giaoDichNTN.setValue(DataBaseManager.getInstance(context).getItemDAO()
-                .timKiemGiaoDichChiTheoNgayThangNam(day, month, year));
     }
 
     public void getGiaoDichChiThang(Context context, int month) {
@@ -57,14 +42,12 @@ public class CalendarViewModel extends ViewModel {
                 .timKiemGiaoDichThuTheoThang(month));
     }
 
-    public void delete(Context context, GiaoDich giaoDich) {
-        DataBaseManager.getInstance(context).getItemDAO().xoaGiaoDich(giaoDich);
+    public void delete(Context context, SpendingInCalendar spendingInCalendar) {
+        DataBaseManager.getInstance(context).getItemDAO().xoaGiaoDich(spendingInCalendar.getId());
     }
 
-    public void getDanhMuc(Context context, int id) {
-         _danhmuc.setValue(DataBaseManager.getInstance(context).getItemDAO().timKiemDanhMuc(id));
+    public void getDanhMuc(Context context, int day, int month, int year) {
+        _danhmuc.setValue(DataBaseManager.getInstance(context).getItemDAO().timKiemDanhMuc(day, month, year));
     }
-    public void setIdGiaoDich(Context context, Long id) {
-         _idGiaoDich.setValue(id);
-    }
+
 }

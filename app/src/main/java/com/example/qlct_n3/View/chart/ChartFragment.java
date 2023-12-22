@@ -123,7 +123,6 @@ public class ChartFragment extends Fragment {
     private void spendingAdapter() {
         List<DataEntry> dataEntries = new ArrayList<>();
         List<SpendingInChart> spendingInChart = new ArrayList<>();
-        adapter.setAdapter(spendingInChart);
         viewModel.get_SpendingInChartChi(requireContext(), calendar.get(Calendar.MONTH) + 1);
         viewModel.SpendingInChartChi().observe(getViewLifecycleOwner(), new Observer<List<SpendingInChart>>() {
             @Override
@@ -147,8 +146,8 @@ public class ChartFragment extends Fragment {
                     pie.setData(dataEntries);
                     binding.anyChart.setVisibility(View.VISIBLE);
                     binding.tvNothing.setVisibility(View.GONE);
-                    adapter.setAdapter(spendingInChart);
                 }
+                adapter.setAdapter(spendingInChart);
                 updateTotal();
             }
         });
@@ -157,7 +156,6 @@ public class ChartFragment extends Fragment {
     private void revenueAdapter() {
         List<DataEntry> dataEntries = new ArrayList<>();
         List<SpendingInChart> spendingInChart = new ArrayList<>();
-        adapter.setAdapter(spendingInChart);
         viewModel.get_SpendingInChartThu(requireContext(), calendar.get(Calendar.MONTH) + 1);
         viewModel.SpendingInChartThu().observe(getViewLifecycleOwner(), new Observer<List<SpendingInChart>>() {
             @Override
@@ -182,8 +180,9 @@ public class ChartFragment extends Fragment {
                     binding.anyChart.setVisibility(View.VISIBLE);
                     binding.tvNothing.setVisibility(View.GONE);
                     Log.e(TAG, "revenueAdapter: " + spendingInChart.size());
-                    adapter.setAdapter(spendingInChart);
+
                 }
+                adapter.setAdapter(spendingInChart);
                 updateTotal();
             }
         });

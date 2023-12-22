@@ -1,77 +1,50 @@
-package com.example.qlct_n3.View.home;
+package com.example.qlct_n3.View.edit_spending;
 
 import static com.example.qlct_n3.ViewExtention.showToast;
 
-import android.app.DatePickerDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.app.DatePickerDialog;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.DatePicker;
 
 import com.example.Constants;
 import com.example.qlct_n3.Model.DanhMuc;
 import com.example.qlct_n3.Model.GiaoDich;
-import com.example.qlct_n3.Model.SpendingInCalendar;
 import com.example.qlct_n3.R;
-import com.example.qlct_n3.View.calendar.CalendarFragment;
-import com.example.qlct_n3.View.calendar.CalendarViewModel;
-import com.example.qlct_n3.View.edit_directory.EditDirectoryActivity;
-import com.example.qlct_n3.View.edit_spending.EditSpendingActivity;
 import com.example.qlct_n3.View.home.HomeViewModel;
-import com.example.qlct_n3.base.DataBaseManager;
-import com.example.qlct_n3.databinding.FragmentHomeBinding;
+import com.example.qlct_n3.databinding.ActivityEditSpendingBinding;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+public class EditSpendingActivity extends AppCompatActivity {
+    private ActivityEditSpendingBinding binding;
 
-public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
-    private FragmentHomeBinding binding;
     private HomeViewModel viewModel;
-    private boolean trangThai;
+    private boolean hieu;
     Calendar calendar;
     private DirectoryAdapter adapter;
+    private GiaoDich giaoDich;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = FragmentHomeBinding.inflate(getLayoutInflater());
-        viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        viewModel._getDanhMucThu(requireContext());
-        viewModel._getDanhMucChi(requireContext());
+        binding = ActivityEditSpendingBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        giaoDich = new GiaoDich();
         calendar = Calendar.getInstance();
-        trangThai = true;
-        adapter = new DirectoryAdapter(
-                new DirectoryAdapter.ClickListener() {
-                    @Override
-                    public void onClickEditDirectory() {
-                        startActivity(new Intent(requireContext(), EditDirectoryActivity.class));
-                    }
-                }
-        );
-        getDanhMucChi();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+        hieu = true;
+        adapter = new DirectoryAdapter();
+        viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         loadView();
-        return binding.getRoot();
-
+        checkUpdate();
     }
 
     private void loadView() {
@@ -81,7 +54,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (binding.edtSpendingMoney.getEditText().getText().toString().isEmpty()) {
-                    showToast(requireContext(), Constants.PLS_ENTER_THE_AMOUNT);
+                    showToast(EditSpendingActivity.this, Constants.PLS_ENTER_THE_AMOUNT);
                 } else {
                     updateSpending();
                 }
@@ -91,7 +64,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (binding.edtSpendingMoney.getEditText().getText().toString().isEmpty()) {
-                    showToast(requireContext(), Constants.PLS_ENTER_THE_AMOUNT);
+                    showToast(EditSpendingActivity.this, Constants.PLS_ENTER_THE_AMOUNT);
                 } else {
                     updateSpending();
                 }
@@ -100,14 +73,14 @@ public class HomeFragment extends Fragment {
         binding.btnTienChi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                trangThai = true;
+                giaoDich.setThuChi(true);
                 onClickTienChi();
             }
         });
         binding.btnTienThu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                trangThai = false;
+                giaoDich.setThuChi(false);
                 onClickTienThu();
             }
         });
@@ -133,17 +106,15 @@ public class HomeFragment extends Fragment {
                 binding.tvDay.setText(selectedDate + "");
             }
         });
+        binding.imbtnBack.setOnClickListener(view -> {
+            finish();
+        });
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     private void onClickday() {
         DatePickerDialog datePicker = new DatePickerDialog(
-                requireContext(), new DatePickerDialog.OnDateSetListener() {
+                EditSpendingActivity.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int yearPicker, int monthPicker, int dayOfMonthPicker) {
                 calendar.set(Calendar.YEAR, yearPicker);
@@ -158,29 +129,26 @@ public class HomeFragment extends Fragment {
         datePicker.show();
     }
 
-
     private void onClickTienThu() {
         getDanhMucThu();
         binding.btnTienThu.setBackgroundResource(R.color.pink);
-        binding.btnTienThu.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
+        binding.btnTienThu.setTextColor(ContextCompat.getColor(EditSpendingActivity.this, R.color.white));
         binding.btnTienChi.setBackgroundResource(R.drawable.border_btn_tienthu);
-        binding.btnTienChi.setTextColor(ContextCompat.getColor(requireContext(), R.color.pink));
+        binding.btnTienChi.setTextColor(ContextCompat.getColor(EditSpendingActivity.this, R.color.pink));
         binding.tvSpendingMoneyOrRevenue.setText(Constants.TIEN_THU);
-        binding.btnAccept.setText(Constants.BTN_TIEN_THU);
     }
 
     private void onClickTienChi() {
         getDanhMucChi();
         binding.btnTienChi.setBackgroundResource(R.color.pink);
-        binding.btnTienChi.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
+        binding.btnTienChi.setTextColor(ContextCompat.getColor(EditSpendingActivity.this, R.color.white));
         binding.btnTienThu.setBackgroundResource(R.drawable.border_btn_tienthu);
-        binding.btnTienThu.setTextColor(ContextCompat.getColor(requireContext(), R.color.pink));
+        binding.btnTienThu.setTextColor(ContextCompat.getColor(EditSpendingActivity.this, R.color.pink));
         binding.tvSpendingMoneyOrRevenue.setText(Constants.TIEN_CHI);
-        binding.btnAccept.setText(Constants.BTN_TIEN_CHI);
     }
 
     private void getDanhMucChi() {
-        viewModel._getDanhMucChi(requireContext());
+        viewModel._getDanhMucChi(EditSpendingActivity.this);
         viewModel.danhMucChi().observe(this, new Observer<List<DanhMuc>>() {
             @Override
             public void onChanged(List<DanhMuc> danhMucs) {
@@ -190,7 +158,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getDanhMucThu() {
-        viewModel._getDanhMucThu(requireContext());
+        viewModel._getDanhMucThu(EditSpendingActivity.this);
         viewModel.danhMucThu().observe(this, new Observer<List<DanhMuc>>() {
             @Override
             public void onChanged(List<DanhMuc> danhMucs) {
@@ -200,20 +168,35 @@ public class HomeFragment extends Fragment {
     }
 
     private void updateSpending() {
-        GiaoDich giaoDich = new GiaoDich(
-                0,
-                calendar.get(Calendar.DAY_OF_MONTH),
-                calendar.get(Calendar.MONTH) + 1,
-                calendar.get(Calendar.YEAR),
-                Long.parseLong(binding.edtSpendingMoney.getEditText().getText().toString()),
-                binding.edtNote.getEditText().getText().toString(),
-                trangThai,
-                adapter.getDanhMuc().getId()
-        );
-        viewModel.set_giaoDich(requireContext(), giaoDich);
-        showToast(requireContext(), Constants.ADD_SUCCESSFUL);
-        binding.edtNote.getEditText().setText("");
-        binding.edtSpendingMoney.getEditText().setText("");
+        giaoDich.setNgayGiaoDich(calendar.get(Calendar.DAY_OF_MONTH));
+        giaoDich.setThangGiaoDich(calendar.get(Calendar.MONTH) + 1);
+        giaoDich.setNamGiaoDich(calendar.get(Calendar.YEAR));
+        giaoDich.setTien(Long.parseLong(binding.edtSpendingMoney.getEditText().getText().toString()));
+        giaoDich.setGhiChu(binding.edtNote.getEditText().getText().toString());
+        giaoDich.setIdDanhMuc(adapter.getDanhMuc().getId());
+        viewModel.update_giaoDich(EditSpendingActivity.this, giaoDich);
+        showToast(EditSpendingActivity.this, Constants.UPDATE_SUCCESSFUL);
+        finish();
     }
 
+    public void checkUpdate() {
+        Long idGiaoDich = getIntent().getLongExtra("idGiaoDich", -1);
+        if (idGiaoDich != -1) {
+            viewModel.get_giaoDich(EditSpendingActivity.this, idGiaoDich);
+            viewModel.gd().observe(this, new Observer<GiaoDich>() {
+                @Override
+                public void onChanged(GiaoDich gd) {
+                    giaoDich = gd;
+                    binding.tvDay.setText(gd.getNgayGiaoDich() + "/" + gd.getThangGiaoDich() + "/" + gd.getNamGiaoDich());
+                    binding.edtNote.getEditText().setText(gd.getGhiChu());
+                    binding.edtSpendingMoney.getEditText().setText(gd.getTien().toString());
+                    calendar.set(gd.getNamGiaoDich(), gd.getThangGiaoDich() - 1, gd.getNgayGiaoDich());
+                    if (gd.getThuChi())
+                        onClickTienChi();
+                    else
+                        onClickTienThu();
+                }
+            });
+        }
+    }
 }

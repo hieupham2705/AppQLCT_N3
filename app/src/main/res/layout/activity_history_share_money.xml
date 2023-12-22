@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:paddingHorizontal="20dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -34,6 +33,8 @@
             android:textColor="@color/gray" />
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="10dp"
+        android:paddingHorizontal="20dp"
         android:id="@+id/recyclerview"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="20"

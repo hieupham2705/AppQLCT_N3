@@ -28,11 +28,24 @@
         android:id="@+id/tv_name_diretory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:text="Ăn uống"
         android:textColor="@color/black"
         android:textStyle="bold" />
 
+    <Space
+        android:layout_width="8dp"
+        android:layout_height="0dp" />
+    <TextView
+        android:id="@+id/tv_note"
+        android:textColor="@color/gray"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Space
+        android:layout_width="8dp"
+        android:layout_height="0dp" />
     <TextView
         android:id="@+id/tv_spending_money"
         android:layout_width="wrap_content"

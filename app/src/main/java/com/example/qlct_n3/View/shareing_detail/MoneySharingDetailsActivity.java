@@ -1,9 +1,12 @@
 package com.example.qlct_n3.View.shareing_detail;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -25,6 +28,7 @@ public class MoneySharingDetailsActivity extends AppCompatActivity {
     ShareMoneyDetailAdapter adapter;
     List<NguoiDung> listNguoiDung;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,11 @@ public class MoneySharingDetailsActivity extends AppCompatActivity {
             public void onClickDone(NguoiDung nguoiDung) {
                 Done(nguoiDung);
             }
+
+            @Override
+            public void onClickMember(NguoiDung nguoiDung) {
+                showMember(nguoiDung);
+            }
         });
         viewModel = new ViewModelProvider(this).get(MoneySharingDetailsViewModel.class);
         listNguoiDung = new ArrayList<>();
@@ -42,6 +51,20 @@ public class MoneySharingDetailsActivity extends AppCompatActivity {
         binding.recyclerview.setAdapter(adapter);
         onClick();
         getData();
+    }
+
+    private void showMember(NguoiDung nguoiDung) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Member"); // Tiêu đề của AlertDialog
+        builder.setMessage("Tên : " + nguoiDung.getTen() + "\n" + "Khoản chi : " + nguoiDung.getKhoanChi() + "\n" + "Số điện thoại : "+nguoiDung.getSdt());
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void getData() {
@@ -65,6 +88,7 @@ public class MoneySharingDetailsActivity extends AppCompatActivity {
             });
         }
     }
+
     private void onClick() {
         binding.imbtnBack.setOnClickListener(view -> {
             finish();

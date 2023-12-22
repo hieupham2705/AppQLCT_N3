@@ -5,13 +5,24 @@ public class SpendingInCalendar {
     private Integer idDirectory;
     private Integer idGiaoDich;
     private Long money;
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    private String note;
     private Boolean check;
 
-    public SpendingInCalendar(Integer avtSpending, Integer idDirectory, Integer idGiaoDich, Long money, Boolean check) {
+    public SpendingInCalendar(Integer avtSpending, Integer idDirectory, Integer idGiaoDich, Long money,String note, Boolean check) {
         this.avtSpending = avtSpending;
         this.idDirectory = idDirectory;
         this.idGiaoDich = idGiaoDich;
         this.money = money;
+        this.note = note;
         this.check = check;
     }
 

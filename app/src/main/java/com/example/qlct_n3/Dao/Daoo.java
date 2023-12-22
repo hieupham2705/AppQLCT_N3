@@ -40,12 +40,16 @@ public interface Daoo {
 
     @Query("select * from GiaoDich where NamGiaoDich = :nam and ThuChi = 0")
     public List<GiaoDich> timKiemGiaoDichThuTheoNam(int nam);
+    @Query("select * from GiaoDich where Id = :id")
+    public GiaoDich timKiemGiaoDichTheoId(Long id);
 
     @Query("SELECT GiaoDich.Tien, DanhMuc.TenDanhMuc, DanhMuc.Icon FROM GiaoDich INNER JOIN DanhMuc ON GiaoDich.IdDanhMuc = DanhMuc.Id WHERE GiaoDich.ThangGiaoDich = :thang AND GiaoDich.ThuChi = 1")
     public List<SpendingInChart> timKiemGiaoDichChiBieuDo(int thang);
 
     @Query("SELECT GiaoDich.Tien, DanhMuc.TenDanhMuc, DanhMuc.Icon FROM GiaoDich INNER JOIN DanhMuc ON GiaoDich.IdDanhMuc = DanhMuc.Id where GiaoDich.ThangGiaoDich = :thang and GiaoDich.ThuChi = 0")
     public List<SpendingInChart> timKiemGiaoDichThuBieuDo(int thang);
+    @Update
+    public void capNhatGiaoDich(GiaoDich giaoDich);
 
     @Delete
     public void xoaGiaoDich (GiaoDich giaoDich);
@@ -63,7 +67,6 @@ public interface Daoo {
     public List<DanhMuc> timKiemDanhMucThu();
     @Delete
     public Integer xoaDanhMuc(DanhMuc danhMuc);
-
     // HÓA ĐƠN
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -71,9 +74,15 @@ public interface Daoo {
 
     @Query("SELECT * from HoaDon where id = :id")
     public HoaDon timKiemHoaDon(Long id);
+    @Query("SELECT * from HoaDon")
+    public List<HoaDon> getAllHoaDon();
+    @Delete
+    public Integer xoaHoaDon(HoaDon hoaDon);
     //NGƯỜI DÙNG
     @Query("SELECT * from NguoiDung where IdHoaDon = :id")
     public List<NguoiDung> timKiemNguoiDungTheoHoaDon(Long id);
+    @Query("Delete from NguoiDung where IdHoaDon = :id")
+    public Integer xoaNguoiDung(Long id);
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void themNguoiDungs(List<NguoiDung> nguoiDungs);
     @Update

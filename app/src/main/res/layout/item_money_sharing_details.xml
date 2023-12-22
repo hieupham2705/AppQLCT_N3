@@ -6,7 +6,8 @@
     android:paddingVertical="15dp"
     android:orientation="horizontal"
     android:layout_marginBottom="8dp"
-    android:background="@drawable/border_recycle_sharemoney">
+    android:backgroundTint="@color/pink"
+    android:background="@drawable/border_item_recycle_sharemoney">
 
     <TextView
         android:layout_weight="1"

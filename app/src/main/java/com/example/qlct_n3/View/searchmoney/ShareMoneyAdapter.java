@@ -16,6 +16,10 @@ import java.util.List;
 
 public class ShareMoneyAdapter extends RecyclerView.Adapter<ShareMoneyAdapter.ViewHolder> {
     private List<NguoiDung> listAdapter = new ArrayList<>();
+    private ClickListener clickListener;
+    public ShareMoneyAdapter(ClickListener clickListener){
+        this.clickListener = clickListener;
+    }
     @NonNull
     @Override
     public ShareMoneyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -26,6 +30,9 @@ public class ShareMoneyAdapter extends RecyclerView.Adapter<ShareMoneyAdapter.Vi
     public void onBindViewHolder(@NonNull ShareMoneyAdapter.ViewHolder holder, int position) {
         holder.binding.tvMoney.setText(listAdapter.get(position).getKhoanChi().toString()+"đ");
         holder.binding.tvName.setText(listAdapter.get(position).getTen());
+        holder.binding.getRoot().setOnClickListener(view -> {
+            clickListener.onClickMember(listAdapter.get(position),position);
+        });
     }
     @Override
     public int getItemCount() {
@@ -44,5 +51,8 @@ public class ShareMoneyAdapter extends RecyclerView.Adapter<ShareMoneyAdapter.Vi
             super(binding.getRoot());
             this.binding = binding;
         }
+    }
+    interface ClickListener {
+        void onClickMember(NguoiDung nguoiDung,int position);
     }
 }

@@ -13,6 +13,11 @@ import com.example.qlct_n3.base.DataBaseManager;
 import java.util.List;
 
 public class CalendarViewModel extends ViewModel {
+    private MutableLiveData<Long> _idGiaoDich = new MutableLiveData<>();
+
+    public LiveData<Long> idGiaoDich() {
+        return _idGiaoDich;
+    }
     private MutableLiveData<List<GiaoDich>> _giaoDichNTN = new MutableLiveData<>();
 
     public LiveData<List<GiaoDich>> giaoDichNTN() {
@@ -58,5 +63,8 @@ public class CalendarViewModel extends ViewModel {
 
     public void getDanhMuc(Context context, int id) {
          _danhmuc.setValue(DataBaseManager.getInstance(context).getItemDAO().timKiemDanhMuc(id));
+    }
+    public void setIdGiaoDich(Context context, Long id) {
+         _idGiaoDich.setValue(id);
     }
 }

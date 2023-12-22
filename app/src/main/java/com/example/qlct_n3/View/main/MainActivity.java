@@ -1,17 +1,22 @@
 package com.example.qlct_n3.View.main;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.os.Handler;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.qlct_n3.R;
+import com.example.qlct_n3.View.calendar.CalendarFragment;
+import com.example.qlct_n3.View.home.HomeFragment;
 import com.example.qlct_n3.base.DataBaseManager;
 import com.example.qlct_n3.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void meownavigation() {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         binding.viewpager.setAdapter(adapter);
         binding.meowbottomnavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override

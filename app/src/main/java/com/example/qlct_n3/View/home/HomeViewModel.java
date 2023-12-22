@@ -25,6 +25,10 @@ public class HomeViewModel extends ViewModel {
     public LiveData<Long> giaoDich(){
         return _giaoDich;
     }
+    private MutableLiveData<GiaoDich> _gd= new MutableLiveData<>();
+    public LiveData<GiaoDich> gd(){
+        return _gd;
+    }
 
     public void _getDanhMucThu(Context context){
         _danhMucThu.setValue(DataBaseManager.getInstance(context).getItemDAO().timKiemDanhMucThu());
@@ -34,6 +38,12 @@ public class HomeViewModel extends ViewModel {
     }
     public void set_giaoDich(Context context,GiaoDich giaoDich){
         _giaoDich.setValue(DataBaseManager.getInstance(context).getItemDAO().themNguoiGiaoDich(giaoDich));
+    }
+    public void get_giaoDich(Context context,Long id){
+        _gd.setValue(DataBaseManager.getInstance(context).getItemDAO().timKiemGiaoDichTheoId(id));
+    }
+    public void update_giaoDich(Context context,GiaoDich giaoDich){
+        DataBaseManager.getInstance(context).getItemDAO().capNhatGiaoDich(giaoDich);
     }
 
 }

@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.qlct_n3.Model.DanhMuc;
+import com.example.qlct_n3.Model.GiaoDich;
 import com.example.qlct_n3.Model.SpendingInCalendar;
 import com.example.qlct_n3.R;
 import com.example.qlct_n3.View.home.DirectoryAdapter;
@@ -95,10 +96,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     return true;
                 }
             });
+            spendingViewHolder.binding.getRoot().setOnClickListener(view -> {
+                clickListener.onClickSpending(listSpending.get(position-1));
+            });
             CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
                 DanhMuc danhMuc = DataBaseManager.getInstance(context).getItemDAO().timKiemDanhMuc(spending.getIdDirectory());
                 spendingViewHolder.binding.tvNameDiretory.setText(danhMuc.getTenDanhMuc() + "");
-                Log.e(TAG, "onBindViewHolder: "+ danhMuc.getTenDanhMuc());
+                Log.e(TAG, "onBindViewHolder: " + danhMuc.getTenDanhMuc());
                 spendingViewHolder.binding.imvAvtSpending.setImageBitmap(decodeBase64ToBitmap(danhMuc.getIcon()));
             });
             if (spending.getCheck()) {
@@ -106,6 +110,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             } else {
                 spendingViewHolder.binding.tvSpendingMoney.setText("+" + spending.getMoney());
             }
+            spendingViewHolder.binding.tvNote.setText(listSpending.get(position-1).getNote());
         }
     }
 
@@ -163,6 +168,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     interface ClickListener {
         void onClickDelete();
+        void onClickSpending(SpendingInCalendar spendingInCalendar);
     }
 }
 

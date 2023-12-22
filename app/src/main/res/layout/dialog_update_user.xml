@@ -15,7 +15,7 @@
         android:layout_marginTop="24dp"
         android:textColor="@color/gray"
         android:textStyle="bold"
-        android:text="Họ Tên"
+        android:text="Họ Tên *"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Khoản chi"
+        android:text="Khoản chi *"
         android:textColor="@color/gray"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/edt_name"
@@ -103,7 +103,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btn_add_member"
+        android:id="@+id/btn_update_member"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

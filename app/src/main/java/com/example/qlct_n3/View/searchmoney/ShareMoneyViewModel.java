@@ -29,6 +29,10 @@ public class ShareMoneyViewModel extends ViewModel {
         DataBaseManager.getInstance(context).getItemDAO().themNguoiDungs(nguoiDungs);
     }
 
+    public void updateMember(NguoiDung nguoiDung, Context context) {
+        DataBaseManager.getInstance(context).getItemDAO().chinhSuaNguoiDung(nguoiDung);
+    }
+
     public List<NguoiDung> shareMoney(List<NguoiDung> nguoiDungs,Long totalMoney,Long idHoaDon) {
         nguoiDungs.forEach(nguoiDung -> {
             nguoiDung.setIdHoaDon(idHoaDon);

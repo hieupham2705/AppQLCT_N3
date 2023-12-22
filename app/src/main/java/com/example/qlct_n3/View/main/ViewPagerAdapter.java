@@ -1,6 +1,8 @@
 package com.example.qlct_n3.View.main;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -11,8 +13,10 @@ import com.example.qlct_n3.View.home.HomeFragment;
 import com.example.qlct_n3.View.menu.MenuFragment;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
-    public ViewPagerAdapter(FragmentManager fragmentManager, Lifecycle lifecycle) {
-        super(fragmentManager, lifecycle);
+
+
+    public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+        super(fragmentActivity);
     }
 
     @Override
@@ -29,8 +33,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
                 return new CalendarFragment();
             case 2:
                 return new ChartFragment();
-            case 3:
-                return new MenuFragment();
             default:
                 return new MenuFragment();
         }

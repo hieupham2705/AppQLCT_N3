@@ -25,7 +25,7 @@ import kotlinx.coroutines.GlobalScope;
 public abstract class DataBaseManager extends RoomDatabase {
     public abstract Daoo getItemDAO();
 
-    private static final String DATABASE_NAME = "room_database.db";
+    private static final String DATABASE_NAME = "database.db";
     private static volatile DataBaseManager instance;
 
     public static DataBaseManager getInstance(Context context) {

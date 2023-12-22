@@ -10,6 +10,7 @@ public class Constants {
     public static final String BTN_TIEN_CHI = "Nhập khoản tiền chi";
     public static final String BTN_TIEN_THU = "Nhập khoản tiền thu";
     public static final String ADD_SUCCESSFUL = "Thêm thành công";
+    public static final String UPDATE_SUCCESSFUL = "Cập nhật thành công";
     public static final String PLS_ENTER_THE_AMOUNT = "Vui lòng nhâp số tiền";
 
     public static void showToast(String string, Context context) {

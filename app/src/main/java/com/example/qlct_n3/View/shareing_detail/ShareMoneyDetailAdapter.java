@@ -1,6 +1,7 @@
 package com.example.qlct_n3.View.shareing_detail;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,15 +37,18 @@ public class ShareMoneyDetailAdapter extends RecyclerView.Adapter<ShareMoneyDeta
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (!listAdapter.get(position).getTrangThai())
-            holder.binding.getRoot().setBackgroundColor(ContextCompat.getColor(context, R.color.red));
+        if (listAdapter.get(position).getTrangThai())
+            holder.binding.getRoot().setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.green)));
         else
-            holder.binding.getRoot().setBackgroundColor(ContextCompat.getColor(context, R.color.green));
+            holder.binding.getRoot().setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.red)));
         holder.binding.tvMoney.setText(listAdapter.get(position).getKhoanChi().toString() + "đ");
         holder.binding.tvName.setText(listAdapter.get(position).getTen());
         holder.binding.getRoot().setOnLongClickListener(view -> {
             showPopupMenu(holder.itemView,position);
             return false;
+        });
+        holder.binding.getRoot().setOnClickListener(view ->{
+            clickListener.onClickMember(listAdapter.get(position));
         });
     }
 
@@ -88,6 +92,7 @@ public class ShareMoneyDetailAdapter extends RecyclerView.Adapter<ShareMoneyDeta
 
     interface ClickListener {
         void onClickDone(NguoiDung nguoiDung);
+        void onClickMember(NguoiDung nguoiDung);
     }
 
 }

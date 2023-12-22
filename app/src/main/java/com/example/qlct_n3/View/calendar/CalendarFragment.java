@@ -19,12 +19,14 @@ import android.view.ViewGroup;
 import android.widget.CalendarView;
 
 import com.example.Constants;
+import com.example.qlct_n3.Model.DanhMuc;
 import com.example.qlct_n3.Model.GiaoDich;
 import com.example.qlct_n3.Model.SpendingInCalendar;
 import com.example.qlct_n3.R;
 import com.example.qlct_n3.View.edit_spending.EditSpendingActivity;
 import com.example.qlct_n3.View.home.HomeFragment;
 import com.example.qlct_n3.View.main.ViewPagerAdapter;
+import com.example.qlct_n3.base.DataBaseManager;
 import com.example.qlct_n3.databinding.FragmentCalendarBinding;
 import com.example.qlct_n3.databinding.FragmentHomeBinding;
 
@@ -32,11 +34,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class CalendarFragment extends Fragment {
     private FragmentCalendarBinding binding;
     private static final String TAG = "CalendarFragment";
-    private List<GiaoDich> listSpending;
+    private List<SpendingInCalendar> listSpending;
     private List<SpendingInCalendar> listAdapter;
     private CalendarAdapter adapter;
     private Calendar calendar;
@@ -68,7 +71,7 @@ public class CalendarFragment extends Fragment {
 
     private void clickSpending(SpendingInCalendar spendingInCalendar) {
         Intent intent = new Intent(getActivity(), EditSpendingActivity.class);
-        intent.putExtra("idGiaoDich",Long.valueOf(spendingInCalendar.getIdGiaoDich()));
+        intent.putExtra("idGiaoDich", Long.valueOf(spendingInCalendar.getId()));
         startActivity(intent);
     }
 
@@ -97,26 +100,14 @@ public class CalendarFragment extends Fragment {
                 calendar.get(Calendar.MONTH) + 1,
                 calendar.get(Calendar.DAY_OF_MONTH)
         );
+        getTotal(calendar.get(Calendar.MONTH) + 1);
         super.onResume();
     }
 
-    private void getData(int year, int month, int day) {
-        viewModel.getGiaoDichNTN(requireContext(), day, month, year);
+    private void getTotal(int month) {
         viewModel.getGiaoDichChiThang(requireContext(), month);
         viewModel.getGiaoDichThuThang(requireContext(), month);
-        viewModel.giaoDichNTN().observe(this, new Observer<List<GiaoDich>>() {
-            @Override
-            public void onChanged(List<GiaoDich> giaoDiches) {
-                listAdapter.clear();
-                listSpending.clear();
-                listSpending.addAll(giaoDiches);
-                for (GiaoDich giaoDich : giaoDiches) {
-                    SpendingInCalendar spendingInCalendar = new SpendingInCalendar(giaoDich.getIdDanhMuc(), giaoDich.getIdDanhMuc(), giaoDich.getId(), giaoDich.getTien(),giaoDich.getGhiChu(), giaoDich.getThuChi());
-                    listAdapter.add(spendingInCalendar);
-                }
-                adapter.setAdapter(day + "/" + month + "/" + year, listAdapter);
-            }
-        });
+
         viewModel.giaoDichChiThang().observe(this, new Observer<List<Long>>() {
             @Override
             public void onChanged(List<Long> longs) {
@@ -133,6 +124,20 @@ public class CalendarFragment extends Fragment {
             }
         });
 
+    }
+
+    private void getData(int year, int month, int day) {
+        viewModel.getDanhMuc(requireContext(), day, month, year);
+        viewModel.danhMuc().observe(getViewLifecycleOwner(), new Observer<List<SpendingInCalendar>>() {
+            @Override
+            public void onChanged(List<SpendingInCalendar> spendingInCalendars) {
+                listAdapter.clear();
+                listSpending.clear();
+                listSpending.addAll(spendingInCalendars);
+                listAdapter.addAll(spendingInCalendars);
+                adapter.setAdapter(day + "/" + month + "/" + year, listAdapter);
+            }
+        });
     }
 
     private void clickDelete() {

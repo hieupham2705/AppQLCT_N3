@@ -88,6 +88,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof SpendingViewHolder) {
             SpendingViewHolder spendingViewHolder = (SpendingViewHolder) holder;
             SpendingInCalendar spending = listSpending.get(position - 1);
+            spendingViewHolder.binding.tvNameDiretory.setText(spending.getTenDanhMuc() + "");
+            spendingViewHolder.binding.imvAvtSpending.setImageBitmap(decodeBase64ToBitmap(spending.getIcon()));
             spendingViewHolder.binding.getRoot().setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -97,20 +99,14 @@ public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             });
             spendingViewHolder.binding.getRoot().setOnClickListener(view -> {
-                clickListener.onClickSpending(listSpending.get(position-1));
+                clickListener.onClickSpending(listSpending.get(position - 1));
             });
-            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-                DanhMuc danhMuc = DataBaseManager.getInstance(context).getItemDAO().timKiemDanhMuc(spending.getIdDirectory());
-                spendingViewHolder.binding.tvNameDiretory.setText(danhMuc.getTenDanhMuc() + "");
-                Log.e(TAG, "onBindViewHolder: " + danhMuc.getTenDanhMuc());
-                spendingViewHolder.binding.imvAvtSpending.setImageBitmap(decodeBase64ToBitmap(danhMuc.getIcon()));
-            });
-            if (spending.getCheck()) {
-                spendingViewHolder.binding.tvSpendingMoney.setText("-" + spending.getMoney());
+            if (spending.getThuChi()) {
+                spendingViewHolder.binding.tvSpendingMoney.setText("-" + spending.getTien());
             } else {
-                spendingViewHolder.binding.tvSpendingMoney.setText("+" + spending.getMoney());
+                spendingViewHolder.binding.tvSpendingMoney.setText("+" + spending.getTien());
             }
-            spendingViewHolder.binding.tvNote.setText(listSpending.get(position-1).getNote());
+            spendingViewHolder.binding.tvNote.setText(listSpending.get(position - 1).getGhiChu());
         }
     }
 
@@ -168,6 +164,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     interface ClickListener {
         void onClickDelete();
+
         void onClickSpending(SpendingInCalendar spendingInCalendar);
     }
 }

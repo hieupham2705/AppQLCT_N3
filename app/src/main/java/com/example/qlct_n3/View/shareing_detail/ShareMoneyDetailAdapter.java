@@ -82,6 +82,9 @@ public class ShareMoneyDetailAdapter extends RecyclerView.Adapter<ShareMoneyDeta
                     case R.id.done:
                         clickListener.onClickDone(listAdapter.get(position));
                         return true;
+                    case R.id.pay:
+                        clickListener.onClickPay(listAdapter.get(position));
+                        return true;
                     default:
                         return false;
                 }
@@ -92,6 +95,8 @@ public class ShareMoneyDetailAdapter extends RecyclerView.Adapter<ShareMoneyDeta
 
     interface ClickListener {
         void onClickDone(NguoiDung nguoiDung);
+        void onClickPay(NguoiDung nguoiDung);
+
         void onClickMember(NguoiDung nguoiDung);
     }
 

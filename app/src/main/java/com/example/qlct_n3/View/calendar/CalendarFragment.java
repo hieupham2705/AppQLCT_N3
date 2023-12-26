@@ -69,12 +69,23 @@ public class CalendarFragment extends Fragment {
         }, requireContext());
     }
 
-    private void clickSpending(SpendingInCalendar spendingInCalendar) {
-        Intent intent = new Intent(getActivity(), EditSpendingActivity.class);
-        intent.putExtra("idGiaoDich", Long.valueOf(spendingInCalendar.getId()));
-        startActivity(intent);
+
+    // hàm lấy dữ liệu bao gồm các giao dịch trong 1 ngày nhất định
+    private void getData(int year, int month, int day) {
+        viewModel.getDanhMuc(requireContext(), day, month, year);
+        viewModel.danhMuc().observe(getViewLifecycleOwner(), new Observer<List<SpendingInCalendar>>() {
+            @Override
+            public void onChanged(List<SpendingInCalendar> spendingInCalendars) {
+                listAdapter.clear();
+                listSpending.clear();
+                listSpending.addAll(spendingInCalendars);
+                listAdapter.addAll(spendingInCalendars);
+                adapter.setAdapter(day + "/" + month + "/" + year, listAdapter);
+            }
+        });
     }
 
+    // Hàm lắng nghe khi có sự thay đổi ngày tháng từ lịch
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -93,6 +104,7 @@ public class CalendarFragment extends Fragment {
         return binding.getRoot();
     }
 
+    // Hàm get lại data khi có sự thay đổi tuwf ngày tháng
     @Override
     public void onResume() {
         getData(
@@ -103,11 +115,10 @@ public class CalendarFragment extends Fragment {
         getTotal(calendar.get(Calendar.MONTH) + 1);
         super.onResume();
     }
-
+    // Hàm get số tiền thu, tieen chi trong 1 tháng và đưa vào text view
     private void getTotal(int month) {
         viewModel.getGiaoDichChiThang(requireContext(), month);
         viewModel.getGiaoDichThuThang(requireContext(), month);
-
         viewModel.giaoDichChiThang().observe(this, new Observer<List<Long>>() {
             @Override
             public void onChanged(List<Long> longs) {
@@ -123,34 +134,23 @@ public class CalendarFragment extends Fragment {
                 });
             }
         });
-
     }
-
-    private void getData(int year, int month, int day) {
-        viewModel.getDanhMuc(requireContext(), day, month, year);
-        viewModel.danhMuc().observe(getViewLifecycleOwner(), new Observer<List<SpendingInCalendar>>() {
-            @Override
-            public void onChanged(List<SpendingInCalendar> spendingInCalendars) {
-                listAdapter.clear();
-                listSpending.clear();
-                listSpending.addAll(spendingInCalendars);
-                listAdapter.addAll(spendingInCalendars);
-                adapter.setAdapter(day + "/" + month + "/" + year, listAdapter);
-            }
-        });
-    }
-
+    // Hàm xóa 1 giao dịch khi nhấn giữ vào 1 item trong list
     private void clickDelete() {
         showYesNoDialog();
     }
 
+    // Hàm click vào 1 item ở list
+    private void clickSpending(SpendingInCalendar spendingInCalendar) {
+        Intent intent = new Intent(getActivity(), EditSpendingActivity.class);
+        intent.putExtra("idGiaoDich", Long.valueOf(spendingInCalendar.getId()));
+        startActivity(intent);
+    }
+    // Hàm xóa 1 giao dịch khi nhấn giữ vào 1 item trong list
     private void showYesNoDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Câu hỏi")
-                .setMessage(
-                        "Bạn có chắc chắn muốn xóa mục? Thao tác này không thể\n" +
-                                "hoàn tác lại."
-                )
+                .setMessage("Bạn có chắc chắn muốn xóa mục? Thao tác này không thể hoàn tác lại.")
                 .setPositiveButton("Yes", (dialog, which) -> {
                     try {
                         viewModel.delete(requireContext(), listSpending.get(adapter.getIndex()));

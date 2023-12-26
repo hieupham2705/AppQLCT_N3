@@ -52,7 +52,6 @@ public class ShareMoneyActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(ShareMoneyViewModel.class);
         onClick();
     }
-
     private void clickMember(NguoiDung nguoiDung, int position) {
         Dialog hhe = new Dialog(this);
         DialogUpdateUserBinding dialogBinding = DialogUpdateUserBinding.inflate(getLayoutInflater());
@@ -60,7 +59,8 @@ public class ShareMoneyActivity extends AppCompatActivity {
         dialogBinding.edtSpending.getEditText().setText(nguoiDung.getKhoanChi().toString());
         dialogBinding.edtPhone.getEditText().setText(nguoiDung.getSdt());
         hhe.setContentView(dialogBinding.getRoot());
-        hhe.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        hhe.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT);
         hhe.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         WindowManager.LayoutParams attributes = hhe.getWindow().getAttributes();
         attributes.y = -170;
@@ -75,7 +75,8 @@ public class ShareMoneyActivity extends AppCompatActivity {
                 String name = dialogBinding.edtName.getEditText().getText().toString();
                 String phone = dialogBinding.edtPhone.getEditText().getText().toString();
                 try {
-                    long spending = Long.parseLong(dialogBinding.edtSpending.getEditText().getText().toString());
+                    long spending = Long.parseLong(dialogBinding.edtSpending.getEditText().
+                            getText().toString());
                     nguoiDung.setTen(name);
                     nguoiDung.setKhoanChi(spending);
                     nguoiDung.setSdt(phone);
@@ -92,7 +93,6 @@ public class ShareMoneyActivity extends AppCompatActivity {
         hhe.setCancelable(true);
         hhe.show();
     }
-
     private void onClick() {
         binding.btnAddMember.setOnClickListener(view -> onClickAddMember());
         binding.btnShareMoney.setOnClickListener(view -> onClickShareMoney());
@@ -101,7 +101,7 @@ public class ShareMoneyActivity extends AppCompatActivity {
             finish();
         });
     }
-
+    // Hàm Xử lý chia tiền
     private void onClickShareMoney() {
         if (checkShareMoney()) {
             try {
@@ -109,16 +109,21 @@ public class ShareMoneyActivity extends AppCompatActivity {
                         Long.parseLong(binding.edtTotalMoney.getEditText().getText().toString()),
                         binding.edtDescribe.getEditText().getText().toString(),
                         listMember.size(),
-                        calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DAY_OF_MONTH)
+                        calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) +
+                                "/" + calendar.get(Calendar.DAY_OF_MONTH)
                 );
                 viewModel.addHoaDon(hoaDon, this);
                 viewModel.hoaDon().observe(this, new Observer<Long>() {
                     @Override
                     public void onChanged(Long aLong) {
-                        Intent intent = new Intent(ShareMoneyActivity.this, MoneySharingDetailsActivity.class);
+                        Intent intent = new Intent(ShareMoneyActivity.this,
+                                MoneySharingDetailsActivity.class);
                         intent.putExtra("id", aLong);
                         startActivity(intent);
-                        viewModel.addAllMember(viewModel.shareMoney(listMember, Long.parseLong(binding.edtTotalMoney.getEditText().getText().toString()), aLong), ShareMoneyActivity.this);
+                        viewModel.addAllMember(viewModel.shareMoney(listMember,
+                                Long.parseLong(binding.edtTotalMoney.
+                                getEditText().getText().toString()), aLong),
+                                ShareMoneyActivity.this);
                         Log.e(TAG, "onChanged: ");
                         startActivity(intent);
                         finish();
@@ -136,20 +141,24 @@ public class ShareMoneyActivity extends AppCompatActivity {
         DialogAddMemberBinding dialogBinding = DialogAddMemberBinding.inflate(getLayoutInflater());
         dialogBinding.btnBack.setOnClickListener(view -> hhe.dismiss());
         hhe.setContentView(dialogBinding.getRoot());
-        hhe.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        hhe.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT);
         hhe.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         WindowManager.LayoutParams attributes = hhe.getWindow().getAttributes();
         attributes.y = -170;
         attributes.gravity = Gravity.BOTTOM;
         hhe.getWindow().setAttributes(attributes);
         dialogBinding.btnAddMember.setOnClickListener(view -> {
-            if (dialogBinding.edtName.getEditText().getText().toString().isEmpty() || dialogBinding.edtSpending.getEditText().getText().toString().isEmpty()) {
-                Constants.showToast("Vui lòng nhập đầy đủ thông tin", getApplicationContext());
+            if (dialogBinding.edtName.getEditText().getText().toString().isEmpty() ||
+                    dialogBinding.edtSpending.getEditText().getText().toString().isEmpty()) {
+                Constants.showToast("Vui lòng nhập đầy đủ thông tin",
+                        getApplicationContext());
             } else {
                 String name = dialogBinding.edtName.getEditText().getText().toString();
                 String phone = dialogBinding.edtPhone.getEditText().getText().toString();
                 try {
-                    long spending = Long.parseLong(dialogBinding.edtSpending.getEditText().getText().toString());
+                    long spending = Long.parseLong(dialogBinding.edtSpending.getEditText().
+                            getText().toString());
                     NguoiDung nguoiDung = new NguoiDung();
                     nguoiDung.setTen(name);
                     nguoiDung.setKhoanChi(spending);
@@ -180,7 +189,9 @@ public class ShareMoneyActivity extends AppCompatActivity {
         }
         if (listMember.size() < 2) {
             onClickAddMember();
-            Constants.showToast("Vui lòng nhập thêm thành viên đề chia tiền (tối thiều 2 người) !", this);
+            Constants.showToast(
+                    "Vui lòng nhập thêm thành viên đề chia tiền (tối thiều 2 người) !"
+                    , this);
             return false;
         }
         return true;

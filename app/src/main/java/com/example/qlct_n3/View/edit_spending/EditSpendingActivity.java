@@ -116,15 +116,18 @@ public class EditSpendingActivity extends AppCompatActivity {
         DatePickerDialog datePicker = new DatePickerDialog(
                 EditSpendingActivity.this, new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker view, int yearPicker, int monthPicker, int dayOfMonthPicker) {
+            public void onDateSet(DatePicker view, int yearPicker, int monthPicker,
+                                  int dayOfMonthPicker) {
                 calendar.set(Calendar.YEAR, yearPicker);
                 calendar.set(Calendar.MONTH, monthPicker );
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonthPicker);
-                String selectedDate = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + calendar.get(Calendar.YEAR); // Month is zero-based
+                String selectedDate = calendar.get(Calendar.DAY_OF_MONTH) + "/" +
+                        (calendar.get(Calendar.MONTH) + 1) + "/" + calendar.get(Calendar.YEAR);
                 binding.tvDay.setText(selectedDate);
             }
         },
-                calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)
+                calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get
+                (Calendar.DAY_OF_MONTH)
         );
         datePicker.show();
     }
@@ -178,7 +181,6 @@ public class EditSpendingActivity extends AppCompatActivity {
         showToast(EditSpendingActivity.this, Constants.UPDATE_SUCCESSFUL);
         finish();
     }
-
     public void checkUpdate() {
         Long idGiaoDich = getIntent().getLongExtra("idGiaoDich", -1);
         if (idGiaoDich != -1) {
@@ -187,10 +189,12 @@ public class EditSpendingActivity extends AppCompatActivity {
                 @Override
                 public void onChanged(GiaoDich gd) {
                     giaoDich = gd;
-                    binding.tvDay.setText(gd.getNgayGiaoDich() + "/" + gd.getThangGiaoDich() + "/" + gd.getNamGiaoDich());
+                    binding.tvDay.setText(gd.getNgayGiaoDich() + "/" + gd.getThangGiaoDich() + "/" +
+                            gd.getNamGiaoDich());
                     binding.edtNote.getEditText().setText(gd.getGhiChu());
                     binding.edtSpendingMoney.getEditText().setText(gd.getTien().toString());
-                    calendar.set(gd.getNamGiaoDich(), gd.getThangGiaoDich() - 1, gd.getNgayGiaoDich());
+                    calendar.set(gd.getNamGiaoDich(), gd.getThangGiaoDich() - 1, gd.
+                            getNgayGiaoDich());
                     if (gd.getThuChi())
                         onClickTienChi();
                     else

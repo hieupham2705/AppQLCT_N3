@@ -56,12 +56,12 @@ public class ChartFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         loadView();
         return binding.getRoot();
     }
 
+    // Hàm load xử lý onClick
     private void loadView() {
         binding.recyclerview.setAdapter(adapter);
         binding.tapLayout.addTab(binding.tapLayout.newTab().setText("Chi tiêu"));
@@ -120,11 +120,13 @@ public class ChartFragment extends Fragment {
         });
     }
 
+    // Hàm load recycleview chi tiêu
     private void spendingAdapter() {
         List<DataEntry> dataEntries = new ArrayList<>();
         List<SpendingInChart> spendingInChart = new ArrayList<>();
         viewModel.get_SpendingInChartChi(requireContext(), calendar.get(Calendar.MONTH) + 1);
-        viewModel.SpendingInChartChi().observe(getViewLifecycleOwner(), new Observer<List<SpendingInChart>>() {
+        viewModel.SpendingInChartChi().observe(getViewLifecycleOwner(),
+                new Observer<List<SpendingInChart>>() {
             @Override
             public void onChanged(List<SpendingInChart> spendingInCharts) {
                 spd = 0;
@@ -132,13 +134,12 @@ public class ChartFragment extends Fragment {
                     binding.anyChart.setVisibility(View.GONE);
                     binding.tvNothing.setVisibility(View.VISIBLE);
                 } else {
-                    Map<String, List<SpendingInChart>> listMap = spendingInCharts.stream().collect(Collectors.groupingBy(SpendingInChart::getTenDanhMuc));
+                    Map<String, List<SpendingInChart>> listMap = spendingInCharts.stream().
+                            collect(Collectors.groupingBy(SpendingInChart::getTenDanhMuc));
                     listMap.forEach((_tenDanhMuc, list) -> {
-                        SpendingInChart s = new SpendingInChart(
-                                list.stream().mapToLong(SpendingInChart::getTien).sum(),
-                                _tenDanhMuc,
-                                list.get(0).getIcon()
-                        );
+                        SpendingInChart s = new SpendingInChart(list.stream().
+                                mapToLong(SpendingInChart::getTien).sum(), _tenDanhMuc, list.get(0).
+                                getIcon());
                         spendingInChart.add(s);
                         dataEntries.add(new ValueDataEntry(s.getTenDanhMuc(), s.getTien()));
                         spd -= s.getTien();
@@ -153,11 +154,13 @@ public class ChartFragment extends Fragment {
         });
     }
 
+    // hàm load recycleview thông kê khoản tiêu
     private void revenueAdapter() {
         List<DataEntry> dataEntries = new ArrayList<>();
         List<SpendingInChart> spendingInChart = new ArrayList<>();
         viewModel.get_SpendingInChartThu(requireContext(), calendar.get(Calendar.MONTH) + 1);
-        viewModel.SpendingInChartThu().observe(getViewLifecycleOwner(), new Observer<List<SpendingInChart>>() {
+        viewModel.SpendingInChartThu().observe(getViewLifecycleOwner(),
+                new Observer<List<SpendingInChart>>() {
             @Override
             public void onChanged(List<SpendingInChart> spendingInCharts) {
                 rv = 0;
@@ -165,13 +168,12 @@ public class ChartFragment extends Fragment {
                     binding.anyChart.setVisibility(View.GONE);
                     binding.tvNothing.setVisibility(View.VISIBLE);
                 } else {
-                    Map<String, List<SpendingInChart>> listMap = spendingInCharts.stream().collect(Collectors.groupingBy(SpendingInChart::getTenDanhMuc));
+                    Map<String, List<SpendingInChart>> listMap = spendingInCharts.stream().
+                            collect(Collectors.groupingBy(SpendingInChart::getTenDanhMuc));
                     listMap.forEach((_tenDanhMuc, list) -> {
-                        SpendingInChart s = new SpendingInChart(
-                                list.stream().mapToLong(SpendingInChart::getTien).sum(),
-                                _tenDanhMuc,
-                                list.get(0).getIcon()
-                        );
+                        SpendingInChart s = new SpendingInChart(list.stream().
+                                mapToLong(SpendingInChart::getTien).sum(), _tenDanhMuc, list.get(0).
+                                getIcon());
                         spendingInChart.add(s);
                         dataEntries.add(new ValueDataEntry(s.getTenDanhMuc(), s.getTien()));
                         rv += s.getTien();
@@ -179,8 +181,6 @@ public class ChartFragment extends Fragment {
                     pie.setData(dataEntries);
                     binding.anyChart.setVisibility(View.VISIBLE);
                     binding.tvNothing.setVisibility(View.GONE);
-                    Log.e(TAG, "revenueAdapter: " + spendingInChart.size());
-
                 }
                 adapter.setAdapter(spendingInChart);
                 updateTotal();

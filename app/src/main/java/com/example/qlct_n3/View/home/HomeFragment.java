@@ -149,7 +149,8 @@ public class HomeFragment extends Fragment {
                 calendar.set(Calendar.YEAR, yearPicker);
                 calendar.set(Calendar.MONTH, monthPicker );
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonthPicker);
-                String selectedDate = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + calendar.get(Calendar.YEAR); // Month is zero-based
+                String selectedDate = calendar.get(Calendar.DAY_OF_MONTH) + "/" +
+                        (calendar.get(Calendar.MONTH) + 1) + "/" + calendar.get(Calendar.YEAR); // Month is zero-based
                 binding.tvDay.setText(selectedDate);
             }
         },

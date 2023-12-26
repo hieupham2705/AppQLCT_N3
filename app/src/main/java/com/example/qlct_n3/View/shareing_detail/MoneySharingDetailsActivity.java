@@ -66,7 +66,9 @@ public class MoneySharingDetailsActivity extends AppCompatActivity {
     private void showMember(NguoiDung nguoiDung) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Member"); // Tiêu đề của AlertDialog
-        builder.setMessage("Tên : " + nguoiDung.getTen() + "\n" + "Khoản chi : " + nguoiDung.getKhoanChi() + "\n" + "Số điện thoại : "+nguoiDung.getSdt());
+        builder.setMessage("Tên : " + nguoiDung.getTen() + "\n" + "Khoản chi : " +
+                nguoiDung.getKhoanChi() + "\n" + "Số điện thoại : " +
+                ""+nguoiDung.getSdt());
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
